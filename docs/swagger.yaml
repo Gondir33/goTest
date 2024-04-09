@@ -1,0 +1,162 @@
+basePath: /
+definitions:
+  controller.CreateRequest:
+    properties:
+      regNums:
+        items:
+          type: string
+        type: array
+    type: object
+  models.Car:
+    properties:
+      id:
+        type: integer
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Owner'
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.Owner:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API Server for goTest Application
+  title: goTest
+  version: "1.0"
+paths:
+  /car:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: "1"
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: DeleteCars By ID
+      tags:
+      - car
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: string
+        in: query
+        name: regNum
+        type: string
+      - description: string
+        in: query
+        name: mark
+        type: string
+      - description: string
+        in: query
+        name: model
+        type: string
+      - description: "2002"
+        in: query
+        name: year
+        type: integer
+      - description: string
+        in: query
+        name: name
+        type: string
+      - description: string
+        in: query
+        name: surname
+        type: string
+      - description: string
+        in: query
+        name: patronymic
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Car'
+            type: array
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: GetCars with filter and pagination
+      tags:
+      - car
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Creating
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: CreateCar By RegNum
+      tags:
+      - car
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: "1"
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: for update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Car'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: UpdateCars By ID
+      tags:
+      - car
+swagger: "2.0"
